@@ -1,0 +1,11 @@
+{
+  "total_items_scored": 30000,
+  "total_actions_flagged": 9462,
+  "mean_baseline_score": 4.1572,
+  "reason_code_counts": {
+    "NO_ACTION": 20538,
+    "HIGH_IMPRESSIONS_STALE_CONTENT": 4977,
+    "STRIKING_DISTANCE_HIGH_IMPRESSIONS": 2887,
+    "STRIKING_DISTANCE_AND_STALE": 1598
+  }
+}
