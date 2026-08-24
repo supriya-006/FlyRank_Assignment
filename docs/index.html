@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Search Opportunity Ranking for Content Refresh Decisions</title>
+    <style>
+      :root {
+        --bg: #f6f8fb;
+        --paper: #ffffff;
+        --ink: #1b2430;
+        --muted: #4b5b6b;
+        --accent: #2d6cdf;
+        --accent-soft: #e8f0ff;
+        --good: #1d7a5b;
+        --bad: #b64d4d;
+        --line: #dfe7f2;
+        --shadow: rgba(22, 31, 44, 0.08);
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        background: var(--bg);
+        color: var(--ink);
+        line-height: 1.6;
+      }
+      .container {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 32px 20px 72px;
+      }
+      .paper {
+        background: var(--paper);
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        box-shadow: 0 12px 30px var(--shadow);
+        overflow: hidden;
+      }
+      .header {
+        padding: 36px 48px 20px;
+        border-bottom: 1px solid var(--line);
+        background: linear-gradient(180deg, #f8fbff 0%, #ffffff 100%);
+      }
+      .eyebrow {
+        color: var(--accent);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        font-size: 12px;
+        font-weight: 700;
+      }
+      h1 {
+        font-size: clamp(2rem, 3vw, 3.1rem);
+        line-height: 1.1;
+        margin: 12px 0 10px;
+      }
+      .meta {
+        color: var(--muted);
+        font-size: 0.95rem;
+      }
+      .section {
+        padding: 20px 48px 0;
+      }
+      h2 {
+        font-size: 1.5rem;
+        margin: 0 0 12px;
+      }
+      p, li {
+        color: var(--ink);
+        font-size: 1rem;
+      }
+      .abstract {
+        background: var(--accent-soft);
+        border-left: 4px solid var(--accent);
+        border-radius: 10px;
+        padding: 18px 18px;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: 28px;
+      }
+      .card {
+        background: #fafcff;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 16px 18px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 12px;
+      }
+      th, td {
+        padding: 10px 12px;
+        border-bottom: 1px solid var(--line);
+        text-align: left;
+      }
+      th {
+        background: #f3f7ff;
+      }
+      .bar-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 8px 0;
+      }
+      .bar {
+        flex: 1;
+        height: 12px;
+        background: #e7edf7;
+        border-radius: 999px;
+        overflow: hidden;
+      }
+      .fill {
+        display: block;
+        height: 100%;
+        background: linear-gradient(90deg, var(--accent) 0%, #5ca7ff 100%);
+        border-radius: 999px;
+      }
+      .tag {
+        display: inline-block;
+        padding: 5px 10px;
+        background: #eef6f2;
+        border: 1px solid #cfe7da;
+        color: var(--good);
+        border-radius: 999px;
+        font-size: 0.8rem;
+        font-weight: 700;
+      }
+      .warning {
+        background: #fff7ea;
+        border: 1px solid #f6d69f;
+        border-left: 4px solid #d69325;
+        padding: 12px 14px;
+        border-radius: 8px;
+      }
+      .recommendations {
+        list-style: none;
+        padding: 0;
+        margin: 16px 0 0;
+      }
+      .recommendations li {
+        padding: 12px 0;
+        border-bottom: 1px solid var(--line);
+      }
+      .recommendations li strong {
+        color: var(--accent);
+      }
+      .footer {
+        padding: 26px 48px 42px;
+        color: var(--muted);
+        border-top: 1px solid var(--line);
+      }
+      a {
+        color: var(--accent);
+      }
+      @media (max-width: 780px) {
+        .grid {
+          grid-template-columns: 1fr;
+        }
+        .header, .section, .footer {
+          padding-left: 20px;
+          padding-right: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <article class="paper">
+        <header class="header">
+          <div class="eyebrow">FlyRank Capstone Research Paper</div>
+          <h1>Search Opportunity Ranking for Content Refresh Decisions</h1>
+          <div class="meta">Author: Self-directed model analysis on the FlyRank internship dataset</div>
+        </header>
+
+        <section class="section">
+          <h2>Abstract</h2>
+          <div class="abstract">
+            <p>
+              This project studies whether a transparent ranking model can improve content refresh prioritization over a simple rule-based baseline.
+              Using a client-held-out split on the FlyRank search dataset, we compare a logistic regression model and a random forest against a baseline refresh score that is explainable and easy to audit.
+              The best learned model improves precision at the top of the queue from a baseline of 0.32 to 0.72 at precision@50, showing that the model is more effective at surfacing the highest-value review candidates.
+              The result is a score-based recommendation system that supports editorial prioritization while keeping the framing explicitly decision-support rather than causal.
+              The core value is not a perfect prediction, but a more reliable ranking of pages that merit review before they decline further.
+            </p>
+          </div>
+        </section>
+
+        <section class="section">
+          <h2>Introduction / Problem statement</h2>
+          <p>
+            FlyRank needs a way to decide which content items should be reviewed, refreshed, or protected next. The decision is operationally important because editorial bandwidth is limited and the cost of missing a declining page is not zero.
+            The underlying task is a ranking problem: identify the subset of pages most likely to deserve intervention, then present them in order of action priority.
+          </p>
+          <p>
+            This study treats the problem as a public-safe, observed ranking task rather than a causal statement about the effect of refreshes. The model is designed to support a human decision process: rank likely declining content, show why it was flagged, and allow editors to review the highest-risk items first.
+          </p>
+        </section>
+
+        <section class="section">
+          <h2>Data</h2>
+          <div class="grid">
+            <div>
+              <p>
+                The analysis uses the starter FlyRank internship dataset shipped in the repo: the processed feature vector and the baseline refresh queue built from the anonymized content refresh dataset.
+                The unit of analysis is a content item, with search, engagement, freshness, and rank-related features aggregated over a trailing window.
+              </p>
+              <p>
+                Public-safe exclusions and safeguards include: excluding client-identifying fields from model training, not using raw IDs as features, and never using label-derived fields such as trend_direction or trend_pct as model inputs.
+                The label is the binary page-health indicator <strong>is_declining_label</strong>, which reflects whether a page is observed as declining under the same measured logic used in the baseline design.
+              </p>
+            </div>
+            <div class="card">
+              <h3>Data scope</h3>
+              <ul>
+                <li>Dataset: starter content refresh dataset</li>
+                <li>Grain: one content item</li>
+                <li>Label: binary declining indicator</li>
+                <li>Split: client-held-out</li>
+                <li>Public-safe: no client names or raw queries</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <h2>Methodology</h2>
+          <p>
+            The model was trained on the same features and the same client-held-out evaluation split used for the Week-4 baseline. This matters because the task is about ranking content within a portfolio context, not about row-level randomness that would leak page and client patterns across train/test.
+          </p>
+          <p>
+            I compared three approaches on the same split and metric: a transparent rule baseline, a logistic regression model, and a random forest model. The main feature families were search volume, engagement, freshness, content age, position, and content-type signals. I deliberately avoided using ID-like columns or label-derived variables as features.
+          </p>
+          <div class="warning">
+            The validation design is intentionally honest: grouped by client, not shuffled at random. This reduces optimistic performance caused by shared client behavior and supports a more realistic editorial view of generalization.
+          </div>
+        </section>
+
+        <section class="section">
+          <h2>Results</h2>
+          <p>
+            The ranking metric used for comparison is precision@50, because the action is a top-K review decision: editors only inspect the highest-ranked candidates at the top of the queue.
+          </p>
+          <table>
+            <thead>
+              <tr>
+                <th>Method</th>
+                <th>Accuracy</th>
+                <th>Precision</th>
+                <th>Recall</th>
+                <th>ROC AUC</th>
+                <th>Precision@20</th>
+                <th>Precision@50</th>
+                <th>Precision@100</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Logistic Regression</td>
+                <td>0.5832</td>
+                <td>0.5861</td>
+                <td>0.6269</td>
+                <td>0.6158</td>
+                <td>0.70</td>
+                <td>0.72</td>
+                <td>0.71</td>
+              </tr>
+              <tr>
+                <td>Random Forest</td>
+                <td>0.5814</td>
+                <td>0.5889</td>
+                <td>0.5983</td>
+                <td>0.6090</td>
+                <td>0.55</td>
+                <td>0.58</td>
+                <td>0.58</td>
+              </tr>
+              <tr>
+                <td>Baseline</td>
+                <td>0.4676</td>
+                <td>0.4610</td>
+                <td>0.2477</td>
+                <td>0.4979</td>
+                <td>0.40</td>
+                <td>0.32</td>
+                <td>0.31</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="card" style="margin-top: 20px;">
+            <h3>Ranked recommendation quality at the top of the queue</h3>
+            <div class="bar-row"><span>Logistic Regression</span><div class="bar"><span class="fill" style="width: 72%;"></span></div><strong>0.72</strong></div>
+            <div class="bar-row"><span>Random Forest</span><div class="bar"><span class="fill" style="width: 58%; background: linear-gradient(90deg, #5d9cec 0%, #7bc2ff 100%);"></span></div><strong>0.58</strong></div>
+            <div class="bar-row"><span>Baseline</span><div class="bar"><span class="fill" style="width: 32%; background: linear-gradient(90deg, #7d8ba6 0%, #aeb7c6 100%);"></span></div><strong>0.32</strong></div>
+          </div>
+        </section>
+
+        <section class="section">
+          <h2>Limitations & honest framing</h2>
+          <p>
+            This is a directional, decision-support model. It measures observed patterns and ranks content by likely opportunity, but it does not claim causal impact or prove that a refresh will improve future performance.
+            The label is also a policy proxy rather than a perfect measure of business value, so the model is best interpreted as a prioritization aid for human review.
+          </p>
+          <p>
+            Error analysis suggests that borderline pages remain difficult: pages with strong rankings but weak engagement, or high-impression content that still looks ambiguous. That is exactly where a human editor should review the item context before acting. The model is therefore a support layer, not a replacement for editorial judgment.
+          </p>
+        </section>
+
+        <section class="section">
+          <h2>Ranked recommendations</h2>
+          <ul class="recommendations">
+            <li><strong>1. Prioritize the top of the model queue for human review.</strong> The model is strongest when focused on the highest-risk items, so editorial action should begin at the top of the ranked list.</li>
+            <li><strong>2. Use the rule baseline as a guardrail.</strong> If a page is both stale and high-impression, it should remain visible even if the learned score is uncertain.</li>
+            <li><strong>3. Review ambiguous pages manually.</strong> Cases with weak engagement but strong position or stale freshness are the most likely to be false positives or false negatives.</li>
+            <li><strong>4. Treat the model as a triage engine, not a causal system.</strong> Recommend, monitor, and test before making broad operational changes.</li>
+          </ul>
+        </section>
+
+        <section class="section">
+          <h2>Reproducibility</h2>
+          <p>
+            The data pipeline and model notebook live in the repository under the work notebook folder. The main comparison file generated by the model run is stored in the project outputs and is consistent with the numbers reported here.
+          </p>
+          <p>
+            This page is intended to be reproducible from a fresh clone with the same project environment, fixed seeds, and the repo’s baseline scripts. The work is honest about the measured signal and the split used for evaluation.
+          </p>
+        </section>
+
+        <section class="section">
+          <h2>Acknowledgments & data credit</h2>
+          <p>
+            Built on the <a href="https://flyrank.ai/" target="_blank" rel="noreferrer">FlyRank ML Internship dataset</a>. This project follows public-safe, research-oriented use of the dataset and focuses on observed search and content patterns rather than client-specific claims.
+          </p>
+        </section>
+
+        <footer class="footer">
+          <p><strong>Summary:</strong> A transparent ranking model improves top-of-queue review quality for declining content and provides a safer, more actionable path than a static rule alone.</p>
+        </footer>
+      </article>
+    </div>
+  </body>
+</html>
